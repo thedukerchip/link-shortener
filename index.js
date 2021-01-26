@@ -4,12 +4,28 @@ $(document).ready(function () {
 
 $("#generate_link").click(function () {
     generateLink()
+    clearLink()
 })
 
 function prefillData() {
     $("#tenure").val(getUrlParameter("t"))
     $("#interest_rate").val(getUrlParameter("i"))
     $("#loan_amount").val(getUrlParameter("l"))
+    clearLink()
+}
+
+function clearLink() {
+    const linkView = $("#link")
+    linkView.hide()
+    linkView.attr("href", "")
+    linkView.text("")
+}
+
+function setLink(link) {
+    const linkView = $("#link")
+    linkView.attr("href", link)
+    linkView.text(link)
+    linkView.show()
 }
 
 function generateLink() {
@@ -26,8 +42,6 @@ function generateLink() {
     }
     const link = window.location.origin + pathname + "?" + queryParams
 
-    console.log("Link : " + link)
-    // $("#link").attr("href", link)
     shortenUrl(link)
 }
 
@@ -54,12 +68,22 @@ function shortenUrl(longUrl) {
             link: longUrl
         }
     }
-    $.post(
-        "https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyDis1cF-gd24jBK0Uqgopts5lyLVUlccLo",
-        postData,
-        function (data) {
-            console.log(data)
-        }
-    );
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify(postData),
+        dataType: 'json',
+        success: function (data) {
+            const link = data.shortLink
+            setLink(link)
+            console.log(link)
+        },
+        error: function () {
+            console.log("Device control failed");
+        },
+        type: 'POST',
+        url: 'https://firebasedynamiclinks.googleapis.com/v1/shortLinks?key=AIzaSyDis1cF-gd24jBK0Uqgopts5lyLVUlccLo'
+    });
+
 
 }
