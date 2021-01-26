@@ -23,58 +23,9 @@
 
     <!-- Load required scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-    <script>
-
-        $(document).ready(function () {
-            prefillData()
-        });
-
-        $("#generate_link").click(function () {
-            generateLink()
-        })
-
-        function prefillData() {
-            $("#tenure").val(getUrlParameter("t"))
-            $("#interest_rate").val(getUrlParameter("i"))
-            $("#loan_amount").val(getUrlParameter("l"))
-        }
-
-        function generateLink() {
-            const data = {
-                t: $("#tenure").val(),
-                i: $("#interest_rate").val(),
-                l: $("#loan_amount").val()
-            }
-
-            const queryParams = new URLSearchParams(data)
-            var pathname = window.location.pathname
-            if(!pathname.trim()) {
-                pathname = "/"
-            }
-            const link = window.location.origin + pathname + "?" + queryParams
-
-            console.log("Link : " + link)
-            $("#link").attr("href", link)
-        }
-
-        var getUrlParameter = function getUrlParameter(sParam) {
-            var sPageURL = window.location.search.substring(1),
-                sURLVariables = sPageURL.split('&'),
-                sParameterName,
-                i;
-
-            for (i = 0; i < sURLVariables.length; i++) {
-                sParameterName = sURLVariables[i].split('=');
-
-                if (sParameterName[0] === sParam) {
-                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
-                }
-            }
-        };
-
-
-    </script>
+    <script src="./index.js"></script>
 </body>
 
 </html>
+
+<!-- https://tdclinkshortener.page.link/ -->
