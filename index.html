@@ -48,7 +48,11 @@
             }
 
             const queryParams = new URLSearchParams(data)
-            const link = window.location.origin + "/?" + queryParams
+            var pathname = window.location.pathname
+            if(!pathname.trim()) {
+                pathname = "/"
+            }
+            const link = window.location.origin + pathname + "?" + queryParams
 
             console.log("Link : " + link)
             $("#link").attr("href", link)
