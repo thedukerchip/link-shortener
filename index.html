@@ -1,1 +1,76 @@
-<h1>Hello!</h1>
+<html>
+
+<head>
+    <title>Link shortener</title>
+</head>
+
+<body>
+    <h1>Calculator</h1>
+
+
+    <label for="tenure">Tenure</label>
+    <input type="number" id="tenure" /> <br />
+
+    <label for="interest_rate">Interest rate</label>
+    <input type="number" id="interest_rate" /> <br />
+
+    <label for="loan_amount">Loan amount</label>
+    <input type="number" id="loan_amount" /> <br />
+
+    <button id="generate_link">Generate link</button><br />
+
+    <a id="link" target="_blank">Generated Link</a>
+
+    <!-- Load required scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+            prefillData()
+        });
+
+        $("#generate_link").click(function () {
+            generateLink()
+        })
+
+        function prefillData() {
+            $("#tenure").val(getUrlParameter("t"))
+            $("#interest_rate").val(getUrlParameter("i"))
+            $("#loan_amount").val(getUrlParameter("l"))
+        }
+
+        function generateLink() {
+            const data = {
+                t: $("#tenure").val(),
+                i: $("#interest_rate").val(),
+                l: $("#loan_amount").val()
+            }
+
+            const queryParams = new URLSearchParams(data)
+            const link = window.location.origin + "/?" + queryParams
+
+            console.log("Link : " + link)
+            $("#link").attr("href", link)
+        }
+
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+        };
+
+
+    </script>
+</body>
+
+</html>
